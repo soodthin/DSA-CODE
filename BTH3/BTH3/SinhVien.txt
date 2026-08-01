@@ -1,0 +1,4 @@
+SV001;Nguyen Van An;12/04/2004;8.5
+SV002;Tran Thi B;21/02/2004;7.2
+SV003;Le Hoang C;21/02/2004;8.0
+SV004;Nguyen Van An;21/02/2000;3.0

@@ -18,6 +18,32 @@
       <Platform>x64</Platform>
     </ProjectConfiguration>
   </ItemGroup>
+  <ItemGroup>
+    <Text Include="SinhVien.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="1.cpp">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="2.cpp">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">false</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="3.cpp">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="4_array.cpp">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="4_linked.cpp">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="5_array.cpp">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="5_linked.cpp">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
+    </ClCompile>
+  </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>16.0</VCProjectVersion>
     <Keyword>Win32Proj</Keyword>
@@ -138,20 +164,6 @@
       <GenerateDebugInformation>true</GenerateDebugInformation>
     </Link>
   </ItemDefinitionGroup>
-  <ItemGroup>
-    <ClCompile Include="..\..\..\CODE\BTH3\BTH3\1-LMS.cpp" />
-    <ClCompile Include="..\..\..\CODE\BTH3\BTH3\1.cpp" />
-    <ClCompile Include="..\..\..\CODE\BTH3\BTH3\2.cpp" />
-    <ClCompile Include="..\..\..\CODE\BTH3\BTH3\3.cpp" />
-    <ClCompile Include="..\..\..\CODE\BTH3\BTH3\4_array.cpp" />
-    <ClCompile Include="..\..\..\CODE\BTH3\BTH3\4_linked.cpp" />
-    <ClCompile Include="..\..\..\CODE\BTH3\BTH3\5_array.cpp" />
-    <ClCompile Include="..\..\..\CODE\BTH3\BTH3\5_linked.cpp" />
-    <ClCompile Include="..\..\..\CODE\BTH3\BTH3\practice.cpp" />
-  </ItemGroup>
-  <ItemGroup>
-    <Text Include="..\..\..\CODE\BTH3\BTH3\SinhVien.txt" />
-  </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
   </ImportGroup>

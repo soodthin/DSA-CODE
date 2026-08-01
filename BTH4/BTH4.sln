@@ -1,0 +1,31 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.35229.62
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "BTH4", "BTH4\BTH4.vcxproj", "{91AC9328-4D6E-4741-A708-9AEF271B3042}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|x64 = Debug|x64
+		Debug|x86 = Debug|x86
+		Release|x64 = Release|x64
+		Release|x86 = Release|x86
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{91AC9328-4D6E-4741-A708-9AEF271B3042}.Debug|x64.ActiveCfg = Debug|x64
+		{91AC9328-4D6E-4741-A708-9AEF271B3042}.Debug|x64.Build.0 = Debug|x64
+		{91AC9328-4D6E-4741-A708-9AEF271B3042}.Debug|x86.ActiveCfg = Debug|Win32
+		{91AC9328-4D6E-4741-A708-9AEF271B3042}.Debug|x86.Build.0 = Debug|Win32
+		{91AC9328-4D6E-4741-A708-9AEF271B3042}.Release|x64.ActiveCfg = Release|x64
+		{91AC9328-4D6E-4741-A708-9AEF271B3042}.Release|x64.Build.0 = Release|x64
+		{91AC9328-4D6E-4741-A708-9AEF271B3042}.Release|x86.ActiveCfg = Release|Win32
+		{91AC9328-4D6E-4741-A708-9AEF271B3042}.Release|x86.Build.0 = Release|Win32
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {3B1DC149-C24E-44C0-9A5E-4ED4A733E327}
+	EndGlobalSection
+EndGlobal

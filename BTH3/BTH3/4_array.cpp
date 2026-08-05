@@ -56,7 +56,7 @@ void convertToBinary(int n) {
 
 int main() {
     int n;
-    cout << "Nhap vao mot so nguyen he thap phan: ";
+    cout << "Nhap vao mot so nguyen he thap phan: ";    
     cin >> n;
 
     cout << "Gia tri he nhi phan cua " << n << " la: ";

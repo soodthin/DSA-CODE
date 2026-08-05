@@ -58,7 +58,7 @@ void enqueue(Queue& q, int x) { //them cuoi
     if (!isFull(q)) {
         if (isEmpty(q))
             q.front++;
-        q.a[++q.rear] = x;
+        q.a[++q.rear] = x;  
     }
 }
 

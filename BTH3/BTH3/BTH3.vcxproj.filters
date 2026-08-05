@@ -41,5 +41,8 @@
     <ClCompile Include="5_array.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="practice.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
 </Project>

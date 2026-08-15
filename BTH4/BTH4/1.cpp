@@ -4,10 +4,12 @@ using namespace std;
 
 struct Node {
     int key;
-    Node* left;
-    Node* right;
+    Node* left, * right;
 };
 
+void init(Node*& root) {
+    root = NULL;
+}
 Node* createNode(int x) {
     Node* p = new Node;
     p->key = x;
@@ -224,7 +226,6 @@ int height(Node* root) {
 }
 
 int main() {
-    Node* root = NULL;
 
     int arr[] = { 50, 25, 75, 15, 35, 65, 85, 10, 20, 60, 80 };
     for (int i = 0; i < 11; i++) {

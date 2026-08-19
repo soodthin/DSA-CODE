@@ -116,7 +116,7 @@ void readFile(ThuVien& tv, const string& fileName) {
 		getline(fileInput, qs.ngayXuatBan, '#');
 
 		getline(fileInput, giaBanStr, '\n');
-		qs.giaBan = stof(giaBanStr);
+		qs.giaBan = stod(giaBanStr);
 
 		addTail(tv, qs);
 	}
@@ -178,12 +178,12 @@ void insertBeforeID(ThuVien&tv, QuyenSach qs) {
 	while (q != nullptr && q->info.maSach != id) {
 		q = q->next;
 	}
-	if (q == nullptr) {
+	if (q == nullptr) { // k tim thay q
 		cout << "Khong tim thay sach co ma " << id << endl;
 		return;
 	}
 	if (q->prev == nullptr) {
-		addHead(tv, qs); // Neu q la dau danh sach, goi addHead de chen p lam head moi
+		addHead(tv, qs); // th q = head, them dau va dat lai head
 	}
 	else {
 		Node* p = createNode(qs);

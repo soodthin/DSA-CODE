@@ -180,7 +180,7 @@ void deleteAfterID(Node* head, const string& targetID) {
 	p->next = temp->next;
 	delete temp;
 	cout << "Da xoa thanh cong!\n";
-}
+}	
 void deleteByID(Node*& head, const string& targetID)
 {
 	Node* q = head;

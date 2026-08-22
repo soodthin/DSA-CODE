@@ -1,8 +1,8 @@
 #include<iostream>
 #include<fstream>
-#include<string>
-#include<sstream>
 #include<iomanip>
+#include<string>	
+#include<sstream>
 using namespace std;
 struct Sach
 {
@@ -13,7 +13,7 @@ struct Sach
 struct Node
 {
 	Sach info;
-	Node* next, *prev;
+	Node* prev, * next;
 };
 struct ThuVien
 {
@@ -31,7 +31,7 @@ Node* createNode(Sach& s) {
 	p->prev = nullptr;
 	return p;
 }
-void addHead(ThuVien& tv, Sach& s) {
+void addHead(ThuVien& tv, Sach s) {
 	Node* p = createNode(s);
 	p->next = tv.head;
 	if (tv.head==nullptr)
@@ -45,7 +45,7 @@ void addHead(ThuVien& tv, Sach& s) {
 	tv.head = p;
 	tv.soLuong++;
 }
-void addTail(ThuVien& tv, Sach& s) {
+void addTail(ThuVien& tv, Sach s) {
 	Node* p = createNode(s);
 	p->prev = tv.tail;
 	if (tv.tail == nullptr)
@@ -54,11 +54,48 @@ void addTail(ThuVien& tv, Sach& s) {
 	}
 	else
 	{
-		tv.tail->next= p;
+		tv.tail->next = p;
 	}
 	tv.tail = p;
 	tv.soLuong++;
 }
+void deleteHead(ThuVien& tv) {
+	if (tv.head==nullptr)
+	{
+		return;
+	}
+	Node* p = tv.head;
+	tv.head = tv.head->next;
+	if (tv.head==nullptr)
+	{
+		tv.tail = nullptr;
+	}
+	else
+	{
+		tv.head->prev = nullptr;
+	}
+	delete p;
+	tv.soLuong--;
+}
+void deleteTail(ThuVien& tv) {
+	if (tv.tail == nullptr)
+	{
+		return;
+	}
+	Node* p = tv.tail;
+	tv.tail = tv.tail->prev;
+	if (tv.tail == nullptr)
+	{
+		tv.head = nullptr;
+	}
+	else
+	{
+		tv.tail->next = nullptr;
+	}
+	delete p;
+	tv.soLuong--;
+}
+
 void readFile(ThuVien& tv, const string& fileName) {
 	ifstream fileInput(fileName);
 	if (!fileInput.is_open())
@@ -71,7 +108,6 @@ void readFile(ThuVien& tv, const string& fileName) {
 	while (getline(fileInput,maSachStr,'#'))
 	{
 		s.maSach = stoi(maSachStr);
-
 		getline(fileInput, s.tieuDe, '#');
 		getline(fileInput, s.tacGia, '#');
 		getline(fileInput, s.ngayXuatBan, '#');
@@ -83,89 +119,55 @@ void readFile(ThuVien& tv, const string& fileName) {
 	}
 	fileInput.close();
 }
-void printBook(Sach&s) {
+void printBook(Sach s) {
 	cout << left << setw(10) << s.maSach
 		<< setw(35) << s.tieuDe
 		<< setw(20) << s.tacGia
-		<< setw(15) << s.ngayXuatBan
-		<< setw(15) << s.giaBan << endl;
+		<< setw(20) << s.ngayXuatBan
+		<< setw(20) << s.giaBan << endl;
 }
 void print(ThuVien& tv) {
+	if (tv.head==nullptr)
+	{
+		cout << "Danh sach rong!\n";
+		return;
+	}
+	cout << left << setw(20) << "\nMA SACH"
+		<< setw(30) << "TIEU DE"
+		<< setw(15) << "TAC GIA"
+		<< setw(20) << "NGAY XUAT BAN"
+		<< setw(20) << "GIA BAN" << endl;
+	cout << string(100, '-') << endl;
 	Node* p = tv.head;
-	cout << endl;
-	cout << left << setw(10) << "MA SACH"
-		<< setw(35) << "TIEU DE"
-		<< setw(20) << "TAC GIA"
-		<< setw(15) << "NGAY XUAT BAN"
-		<< setw(15) << "GIA BAN" << endl;
-	cout << string(95, '-') << endl;
 	while (p!=nullptr)
 	{
 		printBook(p->info);
 		p = p->next;
 	}
 }
-void deleteHead(ThuVien& tv) {
-	if (tv.head!=nullptr)
-	{
-		Node* p = tv.head;
-		tv.head = p->next;
-		p->next = nullptr;
-		if (tv.head!=nullptr)
-		{
-			tv.head->prev = nullptr;
-		}
-		else
-		{
-			tv.tail = nullptr;
-		}
-		delete p;
-		tv.soLuong--;
-	}
-}
-void deleteTail(ThuVien& tv) {
-	if (tv.tail != nullptr)
-	{
-		Node* p = tv.tail;
-		tv.tail = p->prev;
-		p->prev = nullptr;
-		if (tv.tail != nullptr)
-		{
-			tv.tail->next = nullptr;
-		}
-		else
-		{
-			tv.head = nullptr;
-		}
-		delete p;
-		tv.soLuong--;
-	}
-}
 void searchByAuthor(ThuVien& tv, string author) {
 	Node* p = tv.head;
-	bool found = false;
 	while (p!=nullptr)
 	{
-		Sach s;
 		if (p->info.tacGia==author)
 		{
-			cout << "\nTim thay tac gia " << author << endl;
+			cout << "\nTim thay tac gia co ten " << author << endl;
 			printBook(p->info);
 		}
 		p = p->next;
 	}
 }
-void addBeforeId(ThuVien& tv, Sach	s) {
+void addBeforeId(ThuVien& tv, Sach s) {
 	int id;
-	cout << "\nNhap ma sach can them truoc: "; cin >> id;
-	Node* q = tv.head;
-	while (q !=nullptr&& q->info.maSach!=id)
+	cout << "Nhap ma sach can them truoc: "; cin >> id;
+	Node* q = tv.head; 
+	while (q != nullptr && q->info.maSach != id)
 	{
 		q = q->next;
 	}
-	if (q ==nullptr)
+	if (q==nullptr)
 	{
-		cout << "Khong tim thay ma sach " << id << endl;
+		cout << "Khong tim thay id trong danh sach\n";
 		return;
 	}
 	if (q->prev==nullptr)
@@ -175,17 +177,16 @@ void addBeforeId(ThuVien& tv, Sach	s) {
 	else
 	{
 		Node* p = createNode(s);
-		q->prev->next = p;
 		p->prev = q->prev;
 		p->next = q;
+		q->prev->next = p;
 		q->prev = p;
 		tv.soLuong++;
 	}
-	cout << "Da chen thanh cong truoc - " << id << endl;;
 }
 void addAfterId(ThuVien& tv, Sach s) {
 	int id;
-	cout << "Nhap ma sach can them sau: "; cin >> id;
+	cout << "Nhap ma sach can them truoc: "; cin >> id;
 	Node* q = tv.head;
 	while (q!=nullptr&&q->info.maSach!=id)
 	{
@@ -193,7 +194,7 @@ void addAfterId(ThuVien& tv, Sach s) {
 	}
 	if (q==nullptr)
 	{
-		cout << "Khong tim thay id!\n";
+		cout << "Khong tim thay id"; cout << endl;
 		return;
 	}
 	if (q->next==nullptr)
@@ -209,9 +210,8 @@ void addAfterId(ThuVien& tv, Sach s) {
 		q->next = p;
 		tv.soLuong++;
 	}
-	cout << "Da chen thanh cong sau - " << id << endl;;
 }
-void deleteX(ThuVien&tv){
+void deleteX(ThuVien& tv) {
 	int id;
 	cout << "Nhap ma sach can xoa: "; cin >> id;
 	Node* p = tv.head;
@@ -219,7 +219,7 @@ void deleteX(ThuVien&tv){
 	{
 		p = p->next;
 	}
-	if (p!=nullptr)//tim thay nut can xoa
+	if (p!=nullptr)
 	{
 		if (p->prev==nullptr)
 		{
@@ -239,19 +239,22 @@ void deleteX(ThuVien&tv){
 		}
 		p->next = nullptr;
 		p->prev = nullptr;
-
 		delete p;
 		tv.soLuong--;
 	}
+	cout << "Xoa thanh cong sach co ma so " << id << endl;
 }
+
 int main() {
 	ThuVien tv;
 	init(tv);
-	readFile(tv, "ThuVien.txt");
+	readFile(tv,"ThuVien.txt");
 	print(tv);
-	/*Sach newS = {2026,"Cau truc du lieu va giai thuat 1", "Nguyen Quoc Huy","19-8-2026",50000};
+	
+	/*Sach newS = { 2026,"Cau truc du lieu va giai thuat 1","Nguyen Quoc Huy","20-8-2026",100000 };
 	addAfterId(tv, newS);*/
 	deleteX(tv);
 	print(tv);
+
 	return 0;
 }

@@ -18,7 +18,10 @@
     <ClCompile Include="1.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="practice.cpp">
+    <ClCompile Include="practice_linked list.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="practice_binarytree.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

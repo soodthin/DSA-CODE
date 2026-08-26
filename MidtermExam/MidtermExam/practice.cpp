@@ -1,250 +1,320 @@
 #include<iostream>
-#include<cmath> 
+#include<fstream>
+#include<string>
+#include<sstream>
+#include<iomanip>
 using namespace std;
+struct Sach
+{
+	int maSach;
+	string tieuDe, tacGia, ngayXuatBan;
+	double giaBan;
+};
 struct Node
 {
-	int key;
-	Node* left, * right;
+	Sach info;
+	Node* prev, * next;
 };
-void init(Node*& root) {
-	root = nullptr;
+struct ThuVien
+{
+	int soLuong;
+	Node* head, * tail;
+};
+void init(ThuVien& tv) {
+	tv.head = tv.tail = nullptr;
+	tv.soLuong = 0;
 }
-Node* createNode(int x) {
+Node* createNode(Sach s) {
 	Node* p = new Node();
-	p->key = x;
-	p->left = nullptr;
-	p->right = nullptr;
+	p->info = s;
+	p->prev = nullptr;
+	p->next = nullptr;
 	return p;
 }
-void addNode(Node*& root, int x) {
-	Node* p = createNode(x);
-	if (root == nullptr) root = p;
-	else
+void addHead(ThuVien& tv, Sach s) {
+	Node* p = createNode(s);
+	p->next = tv.head;
+	if (tv.head != nullptr) tv.head->prev = p;
+	else tv.tail = p;
+	tv.head = p;
+	tv.soLuong++;
+}
+void addTail(ThuVien& tv, Sach s) {
+	Node* p = createNode(s);
+	p->prev = tv.tail;
+	if (tv.tail != nullptr) tv.tail->next = p;
+	else tv.head = p;
+	tv.tail = p;
+	tv.soLuong++;
+}
+void deleteHead(ThuVien& tv) {
+	if (tv.head!=nullptr)
 	{
-		Node* q = root;
-		Node* parent = nullptr;
-		while (q!=nullptr)
-		{
-			parent = q;
-			if (q->key == x) return;
-			if (x < q->key) q = q->left;
-			else q = q->right;
-		}
-		if (x < parent->key) parent->left = p;
-		else parent->right = p;
+		Node* p = tv.head;
+		tv.head = p->next;
+		p->next = nullptr;
+		if (tv.head != nullptr) tv.head->prev = nullptr;
+		else tv.tail = nullptr;
+		delete p;
+		tv.soLuong--;
 	}
 }
-void addNodeRec(Node*& root, int x) {
-	if (root == nullptr) root = createNode(x);
-	else if (x < root->key) addNodeRec(root->left, x);
-	else addNodeRec(root->right, x);
-}
-void deleteNode(Node*& root, int x) {
-	Node* p = root;
-	Node* parent = nullptr;
-	while (p!=nullptr&&p->key!=x)
+void deleteTail(ThuVien& tv) {
+	if (tv.tail != nullptr)
 	{
-		parent = p;
-		if (x < p->key) p = p->left;
-		else p = p->right;
-	}
-	if (p!=nullptr) //tim thay node can xoa
-	{
-		if (p->left==nullptr&&p->right==nullptr)
-		{
-			if (parent == nullptr) root = nullptr;
-			else
-			{
-				if (p->key < parent->key) parent->left = nullptr;
-				else parent->right = nullptr;
-			}
-			delete p;
-		}
-		else //node co 2 con
-		{
-			if (p->left!=nullptr&&p->right!=nullptr) //xoa node nho nhat cay con trai
-			{
-				parent = p;
-				Node* temp = p->right;
-				while (temp->left!=nullptr)
-				{
-					parent = temp;
-					temp = temp->left;
-				}
-				p->key = temp->key;
-				p=temp;
-			}
-			//xoa node co con trai hoac phai
-			Node* r; // con cua node can xoa
-			if (p->left == nullptr) r = p->right;
-			else r = p->left;
-			if (parent == nullptr) root = r;//node can xoa la node goc
-			else
-			{
-				if (p->key < parent->key) parent->left = r;
-				else parent->right = r;
-			}
-			delete p;
-		}
+		Node* p = tv.tail;
+		tv.tail = p->prev;
+		p->prev = nullptr;
+		if (tv.tail != nullptr) tv.tail->next = nullptr;
+		else tv.head = nullptr;
+		delete p;
+		tv.soLuong--;
 	}
 }
-void deleteNodeRec(Node*& root, int x) {
-	if (root!=nullptr)
+void readFile(ThuVien& tv, const string& fileName) {
+	ifstream fileInput(fileName);
+	if (!fileInput.is_open())
 	{
-		if (x < root->key) deleteNodeRec(root->left, x);
-		else if (x > root->key) deleteNodeRec(root->right, x);
-		else //tim thay x
-		{
-			if (root->left != nullptr && root->right != nullptr)
-			{
-				Node* parent = root;
-				Node* temp = root->right;
-				while (temp->left != nullptr)
-				{
-					parent = temp;
-					temp = temp->left;
-				}
-				root->key = temp->key;
-				deleteNodeRec(root->right, temp->key);
-			}
-			else //node la hoac cay co 1 con
-			{
-				Node* p = root;
-				if (root->left == nullptr) root = root->right;
-				else if (root->right == nullptr) root = root->left;
-				delete p;
-			}
-			
-		}
+		cout << "Khong the mo file " << fileName << endl;
+		return;
 	}
-}
-void lnr(Node* root) {
-	if (root!=nullptr)
+	Sach s;
+	string maSachStr, giaBanStr;
+	while (getline(fileInput,maSachStr,'#'))
 	{
-		lnr(root->left);
-		cout << root->key << "\t";
-		lnr(root->right);
+		s.maSach = stoi(maSachStr);
+
+		getline(fileInput, s.tieuDe, '#');
+		getline(fileInput, s.tacGia, '#');
+		getline(fileInput, s.ngayXuatBan, '#');
+
+		getline(fileInput, giaBanStr, '\n');
+		s.giaBan = stod(giaBanStr);
+
+		addTail(tv, s);
 	}
+	fileInput.close();
 }
-Node* searchNode(Node* root, int x) {
-	Node* p = root;
+void printBook(Sach s) {
+	cout << left << setw(10) << s.maSach
+		<< setw(35) << s.tieuDe
+		<< setw(20) << s.tacGia
+		<< setw(15) << s.ngayXuatBan
+		<<fixed<<setprecision(0) << setw(15) << s.giaBan << endl;
+}
+void print(ThuVien& tv) {
+	Node* p = tv.head;
+	if (tv.head == nullptr) cout << "Danh sach rong!\n";
+	cout << left << setw(10) << "\nMA SACH"
+		<< setw(35) << "TIEU DE"
+		<< setw(20) << "TAC GIA"
+		<< setw(15)<<"NGAY XUAT BAN"
+		<< setw(15) << "GIA BAN" << endl;
+	cout << string(90, '-') << endl;
 	while (p!=nullptr)
 	{
-		if (p->key == x) return p;
-		else if (x < p->key) p = p->left;
-		else p = p->right;
-	}
-	return nullptr;
-}
-void rnl(Node* root) { //sap xep thu tu giam dan
-	if (root != nullptr)
-	{
-		rnl(root->right);
-		cout << root->key << "\t";
-		rnl(root->left);
+		printBook(p->info);
+		p = p->next;
 	}
 }
-int countNodes(Node* root) {
-	if (root == nullptr) return 0;
-	return 1 + countNodes(root->left) + countNodes(root->right);
-}
-int countLeaves(Node* root) {
-	if (root == nullptr) return 0;
-	if (root->left == nullptr && root->right == nullptr) return 1;
-	else return countLeaves(root->left) + countLeaves(root->right);
-}
-int countOneChild(Node* root) {
-	if (root == nullptr) return 0;
-
-	int count = 0;
-	if ((root->left != nullptr&&root->right==nullptr)||(root->left==nullptr&&root->right!=nullptr))
+void searchAuthor(ThuVien& tv, string nameAuthor) {
+	Node* p = tv.head;
+	bool found=false;
+	cout << "\nTac gia co ten " << nameAuthor << ":\n";
+	while (p!=nullptr)
 	{
-		count = 1;
-	}
-	return count + countOneChild(root->left) + countOneChild(root->right);
-}
-int countTwoChildren(Node* root) {
-	if (root == nullptr) return 0;
-	
-	int count = 0;
-	if (root->left!=nullptr&&root->right!=nullptr)
-	{
-		count = 1;
-	}
-	return count + countTwoChildren(root->left) + countTwoChildren(root->right);
-}
-bool isPrime(int n){
-	if (n < 2) return false;
-	if (n == 2) return true;
-	for (int i = 2; i <= sqrt(n); i++)
-	{
-		if (n%i==0)
+		if (p->info.tacGia==nameAuthor)
 		{
-			return false;
+			found = true;
+			printBook(p->info);
+		}
+		p = p->next;
+	}
+	if (found==false)
+	{
+		cout << "Khong tim thay tac gia\n";
+	}
+}
+void addBeforeId(ThuVien& tv, Sach s) {
+	int id;
+	cout << "Nhap ma sach can them truoc: "; cin >> id;
+	Node* q = tv.head;
+	while (q!=nullptr&&q->info.maSach!=id)
+	{
+		q = q->next;
+	}
+	if (q!=nullptr)
+	{
+		if (q->prev == nullptr) addHead(tv, s);
+		else
+		{
+			Node* p = createNode(s);
+			p->next = q;
+			p->prev = q->prev;
+			q->prev->next = p;
+			q->prev = q;
+		}
+		tv.soLuong++;
+	}
+}
+void addAfterId(ThuVien& tv, Sach s) {
+	int id;
+	cout << "Nhap ma sach can them sau: "; cin >> id;
+	Node* q = tv.head;
+	while (q!=nullptr&&q->info.maSach!=id)
+	{
+		q = q->next;
+	}
+	if (q!=nullptr)
+	{
+		if (q->next == nullptr) addTail(tv, s);
+		else
+		{
+			Node* p = createNode(s);
+			p->next = q->next;
+			p->prev = q;
+			q->next->prev = p;
+			q->next = p;
+		}
+		tv.soLuong++;
+	}
+}
+void deleteX(ThuVien& tv) {
+	int id;
+	cout << "Nhap ma sach can xoa: "; cin >> id;
+	Node* q = tv.head;
+	while (q!=nullptr&&q->info.maSach!=id)
+	{
+		q = q->next;
+	}
+	if (q!=nullptr)
+	{
+		if (q->prev == nullptr) tv.head = tv.head->next;
+		else q->prev->next = q->next;
+		if (q->next == nullptr) tv.tail = tv.tail->prev;
+		else q->next->prev = q->prev;
+		q->next = nullptr;
+		q->prev = nullptr;
+		delete q;
+		tv.soLuong--;
+	}
+	cout << "Da xoa thanh cong - " << id << endl;
+}
+void searchByDay(ThuVien& tv) {
+	int day;
+	cout << "Nhap ngay can tim: "; cin >> day;
+	for (Node* p = tv.head; p != nullptr; p=p->next)
+	{
+		string date = p->info.ngayXuatBan;
+		int pos = date.find('-');
+		string d = date.substr(0, pos);
+		if (stoi(d)==day)
+		{
+			printBook(p->info);
 		}
 	}
-	return true;
+	cout << endl;
 }
-int countPrime(Node* root) {
-	if (root == nullptr) return 0;
-	
-	int count = 0;
-	if (isPrime(root->key))
+void searchByMonth(ThuVien& tv) {
+	int month;
+	cout << "Nhap thang can tim: "; cin >> month;
+	for (Node* p = tv.head; p != nullptr; p=p->next)
 	{
-		count = 1;
+		string date = p->info.ngayXuatBan;
+		int pos1 = date.find('-');
+		int pos2 = date.rfind('-');
+		string m = date.substr(pos1 + 1, 2);
+		if (stoi(m)==month)
+		{
+			printBook(p->info);
+		}
 	}
-	return count + countPrime(root->left) + countPrime(root->right);
+	cout << endl;
 }
-int sumTree(Node* root) {
-	if (root == nullptr) return 0;
-	return root->key + sumTree(root->left) + sumTree(root->right);
-}
-int findMin(Node* root) {
-	if (root->left == nullptr)
-		return root->key;
-	return findMin(root->left);
-}
-int findMax(Node* root) {
-	if (root->right==nullptr)
+void searchByYear(ThuVien& tv) {
+	int year;
+	bool found = false;
+	cout << "\nNhap nam can tim: "; cin >> year;
+	for (Node*p  = tv.head;  p!= nullptr;p=p->next)
 	{
-		return root->key;
+		string date = p->info.ngayXuatBan;
+		int pos = date.rfind('-');
+		string n = date.substr(pos + 1);
+		if (stoi(n)==year)
+		{
+			found = true;
+			printBook(p->info);
+		}
 	}
-	return findMax(root->right);
+	if (found==false)
+	{
+		cout << "Khong tim thay sach co nam " << year << endl;
+	}
+	cout << endl;
 }
-int height(Node* root) {
-	if (root == nullptr) return 0;
+Node* nodeAt(ThuVien& tv, int pos) {
+	if (pos < 0) return nullptr;
+	Node* p = tv.head;
+	for (int i = 0; i < pos&&p!=nullptr; i++)
+	{
+		p = p->next;
+	}
+	return p;
+}
+//Selection Sort - DESC
+void selectionSort(ThuVien& tv) {
+	for (int i = 0; i < tv.soLuong - 1; i++) {
+		int maxIdx = i; // Tim phan tu co giaBan lon nhat dua ve vi tri i
+		for (int j = i + 1; j < tv.soLuong; j++) {
+			if (nodeAt(tv, j)->info.giaBan > nodeAt(tv, maxIdx)->info.giaBan) // doi < thanh > - ASC (doi bien thanh min =i)
+				maxIdx = j;
+		}
+		if (maxIdx != i) {
+			swap(nodeAt(tv, i)->info, nodeAt(tv, maxIdx)->info);
+		}
+	}
+}
 
-	int left = height(root->left);
-	int right = height(root->right);
-	return 1 + max(left, right);
-}
-void printTree90(Node* root, int space = 0, int gap = 5) {
-	if (root == nullptr) return;
-
-	space += gap;
-	printTree90(root->right, space, gap);//in cay con phai
-	
-	for (int i = gap; i < space; i++)
-	{
-		cout << " ";
+//Insertion Sort - DESC
+void insertionSort(ThuVien& tv) {
+	for (int i = 1; i < tv.soLuong; i++) {
+		Sach key = nodeAt(tv, i)->info;
+		int pos = i - 1;
+		while (pos >= 0 && nodeAt(tv, pos)->info.giaBan < key.giaBan) { // doi < thanh > - ASC
+			nodeAt(tv, pos + 1)->info = nodeAt(tv, pos)->info;
+			pos--;
+		}
+		nodeAt(tv, pos + 1)->info = key;
 	}
-	cout << root->key << endl;//in node cha
-	printTree90(root->left, space, gap);//in cay con trai
+}
+
+// Interchange Sort - DESC
+void interchangeSort(ThuVien& tv) {
+	for (int i = 0; i < tv.soLuong - 1; i++) {
+		for (int j = i + 1; j < tv.soLuong; j++) {
+			if (nodeAt(tv, i)->info.giaBan < nodeAt(tv, j)->info.giaBan) { // doi < thanh > - ASC
+				swap(nodeAt(tv, i)->info, nodeAt(tv, j)->info);
+			}
+		}
+	}
+}
+
+//Bubble Sort - DESC
+void bubbleSort(ThuVien& tv) {
+	for (int i = 0; i < tv.soLuong - 1; i++) {
+		for (int j = tv.soLuong - 1; j > i; j--) {
+			if (nodeAt(tv, j - 1)->info.giaBan < nodeAt(tv, j)->info.giaBan) { // doi < thanh > - ASC
+				swap(nodeAt(tv, j - 1)->info, nodeAt(tv, j)->info);
+			}
+		}
+	}
 }
 int main() {
-	Node* root;
-	init(root);
-	addNodeRec(root, 45);
-	addNodeRec(root, 17);
-	addNodeRec(root, 88);
-	addNodeRec(root, 23);
-	addNodeRec(root, 6);
-	addNodeRec(root, 91);
-	addNodeRec(root, 34);
-	addNodeRec(root, 79);
-	addNodeRec(root, 12);
-	rnl(root);
-	cout << endl;
-	printTree90(root, 0, 5);
+	ThuVien tv;
+	init(tv);
+	readFile(tv, "ThuVien.txt");
+	print(tv);
+	Sach test = { 2026,"Cau truc du lieu va giai thuat 1","Nguyen Quoc Huy", "21-02-2024",3200000 };
+	searchByMonth(tv);
 	return 0;
 }

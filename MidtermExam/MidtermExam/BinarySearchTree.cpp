@@ -1,4 +1,5 @@
 ﻿#include<iostream>
+#include<cmath> 
 using namespace std;
 struct Node
 {
@@ -22,10 +23,10 @@ void addNode(Node*& root, int x) {
 	{
 		Node* q = root;
 		Node* parent = nullptr;
-		while (q!=nullptr)
+		while (q != nullptr)
 		{
 			parent = q;
-			if (x == q->key) root = p;
+			if (q->key == x) return;
 			if (x < q->key) q = q->left;
 			else q = q->right;
 		}
@@ -34,73 +35,22 @@ void addNode(Node*& root, int x) {
 	}
 }
 void addNodeRec(Node*& root, int x) {
-	if (root == nullptr) createNode(x);
+	if (root == nullptr) root = createNode(x);
 	else if (x < root->key) addNodeRec(root->left, x);
-	else if (x > root->key) addNodeRec(root->right, x);
+	else addNodeRec(root->right, x);
 }
-
-void deleteNode(Node*& root,int x) {
+void deleteNode(Node*& root, int x) {
 	Node* p = root;
 	Node* parent = nullptr;
-	while (p!=nullptr&&p->key!=x)
+	while (p != nullptr && p->key != x)
 	{
 		parent = p;
 		if (x < p->key) p = p->left;
 		else p = p->right;
 	}
-	if (p != nullptr) { //tim thay node can xoa
-		if (p->left==nullptr&&p->right==nullptr) //node la
-		{
-			if (parent == nullptr) root = nullptr;//cay chi co 1 node
-			else // co nhieu hon 1 node
-			{
-				if (p->key < parent->key) parent->left = nullptr;
-				else parent->right = nullptr;
-			}
-			delete p;
-		}
-		else //cay co 2 con
-		{
-			if (p->left!=nullptr&&p->right!=nullptr) // nho nhat cua cay con phai
-			{
-				parent = p;
-				Node* temp = p->right;
-				while (temp->left!=nullptr)
-				{
-					parent = temp;
-					temp = temp->left;
-				}
-				p->key = temp->key;
-				p = temp;
-			}
-			//xoa p khi chi con cay con trai hoac phai
-			Node* r; //la con duy nhat cua node can xoa
-			if (p->left == nullptr) r = p->right;
-			else r = p->left;
-			if (parent == nullptr) root = r;//node xoa la node goc
-			else
-			{
-				if (p->key < parent->key) parent->left = r;
-				else parent->right = r;
-			}
-			delete p;
-		}
-	}
-}
-void deleteNodeX(Node*& root) {
-	int x;
-	cout << "Nhap node can xoa: "; cin >> x;
-	Node* p = root;
-	Node* parent = nullptr;
-	while (p!=nullptr&& p->key!=x)
+	if (p != nullptr) //tim thay node can xoa
 	{
-		parent = p;
-		if (x < p->key) p = p->left;
-		else p = p->right;
-	}
-	if (p!=nullptr)
-	{
-		if (p->left==nullptr&&p->right==nullptr)//node la
+		if (p->left == nullptr && p->right == nullptr)
 		{
 			if (parent == nullptr) root = nullptr;
 			else
@@ -110,13 +60,13 @@ void deleteNodeX(Node*& root) {
 			}
 			delete p;
 		}
-		else //th co 2 con
+		else //node co 2 con
 		{
-			if (p->left!=nullptr&&p->right!=nullptr)
+			if (p->left != nullptr && p->right != nullptr) //xoa node nho nhat cay con trai
 			{
 				parent = p;
 				Node* temp = p->right;
-				while (temp->left!=nullptr)
+				while (temp->left != nullptr)
 				{
 					parent = temp;
 					temp = temp->left;
@@ -124,11 +74,11 @@ void deleteNodeX(Node*& root) {
 				p->key = temp->key;
 				p = temp;
 			}
-			//node can xoa co 2 con trai hoac phai
-			Node* r;//con cua node can xoa
-			if (p->right == nullptr) r = p->left;
-			else r = p->right;
-			if (parent == nullptr) root = r;
+			//xoa node co con trai hoac phai
+			Node* r; // con cua node can xoa
+			if (p->left == nullptr) r = p->right;
+			else r = p->left;
+			if (parent == nullptr) root = r;//node can xoa la node goc
 			else
 			{
 				if (p->key < parent->key) parent->left = r;
@@ -139,17 +89,17 @@ void deleteNodeX(Node*& root) {
 	}
 }
 void deleteNodeRec(Node*& root, int x) {
-	if (root!=nullptr)
+	if (root != nullptr)
 	{
 		if (x < root->key) deleteNodeRec(root->left, x);
-		else if (x < root->key) deleteNodeRec(root->right, x);
-		else // tim thay x
+		else if (x > root->key) deleteNodeRec(root->right, x);
+		else //tim thay x
 		{
-			if (root->left!=nullptr&&root->right!=nullptr)
+			if (root->left != nullptr && root->right != nullptr)
 			{
 				Node* parent = root;
 				Node* temp = root->right;
-				while (temp->left!=nullptr)
+				while (temp->left != nullptr)
 				{
 					parent = temp;
 					temp = temp->left;
@@ -157,19 +107,28 @@ void deleteNodeRec(Node*& root, int x) {
 				root->key = temp->key;
 				deleteNodeRec(root->right, temp->key);
 			}
-			else //node la hoac co 1 cay con
+			else //node la hoac cay co 1 con
 			{
 				Node* p = root;
 				if (root->left == nullptr) root = root->right;
-				else if (root->right == nullptr)root = root->left;
+				else if (root->right == nullptr) root = root->left;
 				delete p;
 			}
+
 		}
+	}
+}
+void lnr(Node* root) {
+	if (root != nullptr)
+	{
+		lnr(root->left);
+		cout << root->key << "\t";
+		lnr(root->right);
 	}
 }
 Node* searchNode(Node* root, int x) {
 	Node* p = root;
-	while (p!=nullptr)
+	while (p != nullptr)
 	{
 		if (p->key == x) return p;
 		else if (x < p->key) p = p->left;
@@ -177,23 +136,115 @@ Node* searchNode(Node* root, int x) {
 	}
 	return nullptr;
 }
-void lnr(Node* root) {
-	if (root!=nullptr)
+void rnl(Node* root) { //sap xep thu tu giam dan
+	if (root != nullptr)
 	{
-		lnr(root->left);
+		rnl(root->right);
 		cout << root->key << "\t";
-		lnr(root->right);
+		rnl(root->left);
 	}
+}
+int countNodes(Node* root) {
+	if (root == nullptr) return 0;
+	return 1 + countNodes(root->left) + countNodes(root->right);
+}
+int countLeaves(Node* root) {
+	if (root == nullptr) return 0;
+	if (root->left == nullptr && root->right == nullptr) return 1;
+	else return countLeaves(root->left) + countLeaves(root->right);
+}
+int countOneChild(Node* root) {
+	if (root == nullptr) return 0;
+
+	int count = 0;
+	if ((root->left != nullptr && root->right == nullptr) || (root->left == nullptr && root->right != nullptr))
+	{
+		count = 1;
+	}
+	return count + countOneChild(root->left) + countOneChild(root->right);
+}
+int countTwoChildren(Node* root) {
+	if (root == nullptr) return 0;
+
+	int count = 0;
+	if (root->left != nullptr && root->right != nullptr)
+	{
+		count = 1;
+	}
+	return count + countTwoChildren(root->left) + countTwoChildren(root->right);
+}
+bool isPrime(int n) {
+	if (n < 2) return false;
+	if (n == 2) return true;
+	for (int i = 2; i <= sqrt(n); i++)
+	{
+		if (n % i == 0)
+		{
+			return false;
+		}
+	}
+	return true;
+}
+int countPrime(Node* root) {
+	if (root == nullptr) return 0;
+
+	int count = 0;
+	if (isPrime(root->key))
+	{
+		count = 1;
+	}
+	return count + countPrime(root->left) + countPrime(root->right);
+}
+int sumTree(Node* root) {
+	if (root == nullptr) return 0;
+	return root->key + sumTree(root->left) + sumTree(root->right);
+}
+int findMin(Node* root) {
+	if (root->left == nullptr)
+		return root->key;
+	return findMin(root->left);
+}
+int findMax(Node* root) {
+	if (root->right == nullptr)
+	{
+		return root->key;
+	}
+	return findMax(root->right);
+}
+int height(Node* root) {
+	if (root == nullptr) return 0;
+
+	int left = height(root->left);
+	int right = height(root->right);
+	return 1 + max(left, right);
+}
+void printTree90(Node* root, int space = 0, int gap = 5) {
+	if (root == nullptr) return;
+
+	space += gap;
+	printTree90(root->right, space, gap);//in cay con phai
+
+	for (int i = gap; i < space; i++)
+	{
+		cout << " ";
+	}
+	cout << root->key << endl;//in node cha
+	printTree90(root->left, space, gap);//in cay con trai
 }
 int main() {
 	Node* root;
 	init(root);
-	addNode(root,521);
-	addNode(root, 1234);
-	addNode(root, 1);
-	lnr(root);
+	addNodeRec(root, 45);
+	addNodeRec(root, 17);
+	addNodeRec(root, 88);
+	addNodeRec(root, 23);
+	addNodeRec(root, 6);
+	addNodeRec(root, 91);
+	addNodeRec(root, 34);
+	addNodeRec(root, 79);
+	addNodeRec(root, 12);
+	rnl(root);
 	cout << endl;
-
-	searchNode(root,1234);
+	printTree90(root, 0, 5);
 	return 0;
 }

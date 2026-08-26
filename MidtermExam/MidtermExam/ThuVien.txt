@@ -1,0 +1,30 @@
+1001#Lap trinh C co ban#Nguyen Van An#12-03-2024#85000
+1002#Cau truc du lieu va giai thuat#Tran Minh Duc#25-07-2023#120000
+1003#Lap trinh Java nang cao#Le Minh Tuan#08-11-2025#135000
+1004#Co so du lieu#Pham Thi Lan#19-02-2022#105000
+1005#Mang may tinh#Vo Quoc Bao#30-06-2024#98000
+1006#Tri tue nhan tao#Nguyen Hoang Nam#15-09-2025#145000
+1007#Lap trinh Python#Bui Thanh Phong#22-01-2023#125000
+1008#He dieu hanh#Do Van Kien#07-05-2024#110000
+1009#An toan thong tin#Tran Thi Mai#18-10-2022#99000
+1010#Phan tich thiet ke he thong#Le Van Hieu#03-12-2025#118000
+1011#Lap trinh Web#Nguyen Duc Long#26-04-2023#130000
+1012#Cong nghe phan mem#Pham Quoc Cuong#11-08-2024#95000
+1013#Khoa hoc du lieu#Vu Ngoc Han#07-03-2025#155000
+1014#Machine Learning co ban#Nguyen Thi Lan#14-06-2023#160000
+1015#Deep Learning ung dung#Tran Huu Phuc#20-11-2025#175000
+1016#Phat trien ung dung di dong#Le Thanh Son#05-02-2024#115000
+1017#Lap trinh game#Bui Tuan Kiet#17-09-2022#128000
+1018#Xu ly anh so#Do Thi Hoa#23-05-2025#102000
+1019#Khai pha du lieu#Nguyen Van Hung#09-01-2023#138000
+1020#He thong thong tin#Pham Minh Quan#31-07-2024#112000
+1021#Lap trinh C Sharp#Tran Van Khoa#16-10-2025#125000
+1022#Thiet ke giao dien Web#Bui Ngoc Anh#28-02-2022#108000
+1023#Phat trien phan mem#Nguyen Hoang Phuc#12-12-2024#142000
+1024#Nhap mon Blockchain#Le Thanh Tung#07-04-2026#165000
+1025#Internet Van Vat#Pham Duc Long#19-08-2023#135000
+1026#Dien toan dam may#Vo Minh Tuan#24-01-2025#148000
+1027#Lap trinh Kotlin#Tran Quoc Viet#06-06-2024#120000
+1028#Ung dung AI trong thuc te#Nguyen Minh Quan#15-03-2026#185000
+1029#Quan tri co so du lieu#Do Van Nam#27-09-2025#132000
+1030#Ky thuat lap trinh#Pham Thanh Hai#10-05-2023#97000

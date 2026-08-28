@@ -27,9 +27,21 @@
     <ClCompile Include="DoubleLinkedList.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="2251010086_ThaiDoThinh.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="stack.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="queue.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Text Include="ThuVien.txt">
+      <Filter>Header Files</Filter>
+    </Text>
+    <Text Include="SanPham.txt">
       <Filter>Header Files</Filter>
     </Text>
   </ItemGroup>

@@ -1,0 +1,21 @@
+Ma san pham,Ten san pham,So luong ton kho,Gia san pham,Nha cung cap
+1001,Laptop Dell XPS 13,25,32000000,Dell Viet Nam
+1002,iPhone 14 Pro,15,28000000,Apple Store
+1003,Tai nghe Sony WH1000XM5,40,7000000,Sony Viet Nam
+1004,Ban phim co Keychron K6,60,2500000,Keychron Official
+1005,Man hinh LG Ultrawide 34,30,12000000,LG Electronics
+1006,May tinh bang iPad Air 5,22,16000000,Apple Store
+1007,Smartwatch Samsung Galaxy Watch 5,35,7500000,Samsung Viet Nam
+1008,Loa Bluetooth JBL Charge 5,45,4200000,JBL Viet Nam
+1009,Camera Canon EOS M50,18,18500000,Canon Viet Nam
+1010,May in HP LaserJet Pro M404,27,6200000,HP Viet Nam
+1011,Chuot Logitech MX Master 3,50,2500000,Logitech Viet Nam
+1012,SSD Samsung 980 Pro 1TB,40,3800000,Samsung Viet Nam
+1013,Ram Kingston Fury 16GB,65,2200000,Kingston Viet Nam
+1014,Mainboard Asus ROG Strix Z690,12,9500000,Asus Viet Nam
+1015,CPU Intel Core i7 12700K,20,9500000,Intel Viet Nam
+1016,Card man hinh NVIDIA RTX 3080,10,25000000,NVIDIA Viet Nam
+1017,May giat LG Inverter 9kg,14,8800000,LG Electronics
+1018,Tivi Sony Bravia 55 inch,16,21000000,Sony Viet Nam
+1019,Tu lanh Samsung Family Hub,8,45000000,Samsung Viet Nam
+1020,Lo vi song Sharp 20L,28,1900000,Sharp Viet Nam

@@ -1,3 +1,4 @@
+Ma sach,Tieu de,Tac gia,Ngay xuat ban, Gia ban
 1001#Lap trinh C co ban#Nguyen Van An#12-03-2024#85000
 1002#Cau truc du lieu va giai thuat#Tran Minh Duc#25-07-2023#120000
 1003#Lap trinh Java nang cao#Le Minh Tuan#08-11-2025#135000

@@ -152,9 +152,9 @@ void addBeforeId(ThuVien& tv, Sach s) {
 			p->next = q;
 			p->prev = q->prev;
 			q->prev->next = p;
-			q->prev = q;
+			q->prev = p;
+			tv.soLuong++;
 		}
-		tv.soLuong++;
 	}
 }
 void addAfterId(ThuVien& tv, Sach s) {
